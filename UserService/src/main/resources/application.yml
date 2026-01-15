@@ -36,3 +36,14 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  app:
+    name: USER-SERVICE
+    description: User management microservice
+    version: 1.0.0

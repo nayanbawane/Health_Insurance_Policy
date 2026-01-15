@@ -14,8 +14,14 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+
     @Autowired
     private UserService userService;
+
+    @GetMapping("/welcome")
+    public String greeting() {
+        return  "User Controller!";
+    }
 
 
     // 🔹 Called by Auth Service during registration

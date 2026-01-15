@@ -7,6 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="API-GATEWAY" />
+        <module name="ServiceRegistry" />
         <module name="UserService" />
         <module name="AUTH_SERVICE" />
       </profile>
@@ -14,7 +16,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API-GATEWAY" options="-parameters" />
       <module name="AUTH_SERVICE" options="-parameters" />
+      <module name="ServiceRegistry" options="-parameters" />
       <module name="UserService" options="-parameters" />
     </option>
   </component>
