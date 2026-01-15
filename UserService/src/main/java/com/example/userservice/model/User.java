@@ -3,12 +3,17 @@ package com.example.userservice.model;
 
 import com.example.userservice.model.enums.UserRole;
 import com.example.userservice.model.enums.UserStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,7 +27,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
+
 
     @Column(nullable = false)
     private String firstName;
@@ -32,8 +39,9 @@ public class User {
 
 
     @Email(message = "Invalid email format")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
+
 
     @Column(nullable = false)
     @Pattern(
@@ -42,7 +50,9 @@ public class User {
     )
     private String mobile;
 
-    private LocalDateTime dateOfBirth;
+    @NotNull(message = "Date of birth is required")
+    @Past(message = "Date of birth must be in the past")
+    private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -65,5 +75,10 @@ public class User {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String password;
+
 
 }

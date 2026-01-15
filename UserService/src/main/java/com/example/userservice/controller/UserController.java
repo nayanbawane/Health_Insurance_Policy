@@ -1,6 +1,8 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.model.User;
+import com.example.userservice.model.dto.LoginRequest;
+import com.example.userservice.model.enums.UserStatus;
 import com.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ public class UserController {
 
 
     // 🔹 Called by Auth Service during registration
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
@@ -35,8 +37,9 @@ public class UserController {
     }
 
     // 🔹 Admin use
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<User>>
+    getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
@@ -55,5 +58,13 @@ public class UserController {
         return ResponseEntity.ok("User deactivated successfully");
     }
 
+
+    @PostMapping("/users/validate")
+    public User validateUser(@RequestBody LoginRequest request) {
+        return userService.validateUser(
+                request.getUsername(),
+                request.getPassword()
+        );
+    }
 
 }
